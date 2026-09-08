@@ -54,6 +54,12 @@ jobs:
       run:
         working-directory: terraform/environments/${{ matrix.env }}
 
+    env:
+      # GitHub の Variables は式としてしか解決されない。Terraform に届けるには
+      # TF_VAR_<変数名> の形で環境変数に載せる必要がある
+      TF_VAR_slack_team_id: ${{ vars.SLACK_TEAM_ID }}
+      TF_VAR_slack_channel_id: ${{ vars.SLACK_CHANNEL_ID }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
